@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="CS194 Project4:&nbsp;Facial Keypoint Detection with Neural Networks">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Part2 Light Field Camera</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Part2-Light-Field-Camera.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 2.27.1, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    
+    
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"url": "index.html"
+}</script>
+    <meta property="og:title" content="Part2 Light Field Camera">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body class="u-body"><header class="u-clearfix u-header u-palette-1-light-3 u-header" id="sec-509c"><div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-text-palette-1-dark-1 u-text-1">CS194 Final Project:&nbsp;<br>Light Field Camera &amp; Imgae Quilting
+        </h1>
+        <h4 class="u-text u-text-palette-3-base u-text-2">Sainan Chen<br>12/9/2020
+        </h4>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0;">
+            <a class="u-active-palette-1-base u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Introduction.html" style="padding: 10px 36px;">Introduction</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Part1-Image-Quilting.html" style="padding: 10px 36px;">Part1 Image Quilting</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Part2-Light-Field-Camera.html" style="padding: 10px 36px;">Part2 Light Field Camera</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Conclusion.html" style="padding: 10px 36px;">Conclusion</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Introduction.html" style="padding: 10px 36px;">Introduction</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Part1-Image-Quilting.html" style="padding: 10px 36px;">Part1 Image Quilting</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Part2-Light-Field-Camera.html" style="padding: 10px 36px;">Part2 Light Field Camera</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Conclusion.html" style="padding: 10px 36px;">Conclusion</a>
+</li></ul>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-cdf9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Overview</h2>
+        <p class="u-text u-text-2">Light Field Camera is a special camera that captures 4D light fields instead of 2D flat images. A <a href="https://en.wikipedia.org/wiki/Light_field" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1" target="_blank">light field</a> contains light position and light direction. Therefore, with light directions saved, we can adjust focus length and aperture size after the photo is taken by a light field camera. Based on&nbsp;&nbsp;<a href="http://graphics.stanford.edu/papers/lfcamera/lfcamera-150dpi.pdf" class="u-active-none u-border-none u-btn u-button-style u-hover-none u-none u-text-palette-1-base u-btn-2" target="_blank">Light Field Photography with a Hand-held Plenoptic Camera</a>&nbsp;by Ng et al.,&nbsp;&nbsp;it's surprising that actually we can repoduce the effects of a light field camera using simple operations of 2D images.<br>
+          <br>In this project, I'm trying to mimic the pictures taken by a light field camera with varying focus length and aperture size using pictures taken by normal cameras from different positions on&nbsp;a plane orthogonal to the optical axis.&nbsp;<br>
+          <br>The sample images are from <a href="http://lightfield.stanford.edu/lfs.html" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-3" target="_blank">Stanford Light Field Archive</a>. Images are acquired using a 17*17 camera array which capture a object from slighly different directions.
+        </p>
+        <div class="u-clearfix u-gutter-68 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-image u-layout-cell u-left-cell u-size-30 u-image-1" data-image-width="243" data-image-height="150">
+                <div class="u-container-layout u-container-layout-1"></div>
+              </div>
+              <div class="u-container-style u-image u-layout-cell u-right-cell u-size-30 u-image-2" data-image-width="200" data-image-height="150">
+                <div class="u-container-layout u-container-layout-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="carousel_c521">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Depth Refocusing</h2>
+        <p class="u-text u-text-2">Because of different position of different cameras in the array, if the camera array is right in front of the object, objects far from camera and objects close to camera will move in opposite direction from images captured by from left most camera and right most camera. Furthermore, further the object is from cameras, less the object will shift in images captured by cameras on diiferent positions. Therefore, if we shift images by the camera position * a fixed parameter, we can make sure images can match each other on some fixed depth. If we average all those images together, we can reproduce an image which mimics the effect of a light field camera focusing on that depth with other parts on the image blured.<br>
+          <br>Because we have a 17*17 camera array, I will take camera on row 8, column 8 as the central camera, represented as (8,8) (row, col). For image taken by camera (i,j), the <b>shift (vertical, horizontal) will be C * (i-8, j-8), where C is the parameter of different focusing depth. </b>Smaller the C, further the focusing depth is.<br>
+          <br>Below are some examples of varying refocusing depth using varying C value.&nbsp;
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="sec-3f8f">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <img src="images/out_00_00_-702.718018_459.879150.png" alt="" class="u-image u-image-default u-image-1" data-image-width="1024" data-image-height="512">
+                  <p class="u-text u-text-default u-text-1">Example 1: candy</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-2" src="images/11.gif" data-image-width="932" data-image-height="428">
+                  <p class="u-text u-text-default u-text-2">C value: -5, -4.5, -4, -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-2">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-3">
+                  <img src="images/out_00_10_-1505.332397_814.113892_.png" alt="" class="u-image u-image-default u-image-3">
+                  <p class="u-text u-text-default u-text-3">Example 2: necklace</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-4">
+                <div class="u-container-layout u-container-layout-4">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-4" src="images/21.gif">
+                  <p class="u-text u-text-default u-text-4">C value: -4, -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-3">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-5">
+                <div class="u-container-layout u-container-layout-5">
+                  <img src="images/out_00_00_-76.360313_1457.569214_.png" alt="" class="u-image u-image-default u-image-5">
+                  <p class="u-text u-text-default u-text-5">Example 3: treasure box</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-6">
+                <div class="u-container-layout u-container-layout-6">
+                  <img class="u-expand-resize u-image u-image-6" src="images/31.gif">
+                  <p class="u-text u-text-default u-text-6">C value: -3, -2, -1, 0, 1, 2, 3, 4&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="carousel_44e2">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Aperture Adjustment</h2>
+        <p class="u-text u-text-2">To mimic varying aperture size, we only need to change the number of images averaged to get the result. The more images used, the larger the aperture size, because larger aperture can capture lights from more directions, which means images from more positions in this case. For a specific aperture size, we have a parameter C such that I will average images (i,j) which satisfy <b>|i-8|&lt;=D and |j-8|&lt;=D</b>&nbsp;to produce output.<br>
+          <br>For examples below, I choose several different C values for different aperture sizes.
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-5" id="carousel_9f20">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <img src="images/out_00_00_-702.718018_459.879150.png" alt="" class="u-image u-image-default u-image-1" data-image-width="1024" data-image-height="512">
+                  <p class="u-text u-text-default u-text-1">Sample 1: candy</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-2" src="images/12.gif">
+                  <p class="u-text u-text-2">C = -1.5, D = 0, 1, 2, 3, 4, 5, 6, 7, 8</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-2">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-3">
+                  <img src="images/out_00_10_-1505.332397_814.113892_.png" alt="" class="u-image u-image-default u-image-3">
+                  <p class="u-text u-text-default u-text-3">Sample 2: necklace</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-4">
+                <div class="u-container-layout u-valign-bottom u-container-layout-4">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-4" src="images/22.gif">
+                  <p class="u-text u-text-4">C = -1.5, D = 0, 1, 2, 3, 4, 5, 6, 7, 8</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-3">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-5">
+                <div class="u-container-layout u-container-layout-5">
+                  <img src="images/out_00_00_-76.360313_1457.569214_.png" alt="" class="u-image u-image-default u-image-5" data-image-width="1536" data-image-height="1280">
+                  <p class="u-text u-text-default u-text-5">Sample 3: treasure box</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-38 u-layout-cell-6">
+                <div class="u-container-layout u-container-layout-6">
+                  <img class="u-expand-resize u-image u-image-6" src="images/32.gif">
+                  <p class="u-text u-text-default u-text-6">C = 1, D = 0, 1, 2, 3, 4, 5, 6, 7, 8</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b697"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Sainan Chen</p>
+      </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
+    </section>
+  </body>
+</html>

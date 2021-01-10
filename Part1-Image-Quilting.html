@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="CS194 Project4:&nbsp;Facial Keypoint Detection with Neural Networks, Introduction">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Part1 Image Quilting</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Part1-Image-Quilting.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 2.27.1, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    
+    
+    
+    
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"url": "index.html"
+}</script>
+    <meta property="og:title" content="Part1 Image Quilting">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+  </head>
+  <body class="u-body"><header class="u-clearfix u-header u-palette-1-light-3 u-header" id="sec-509c"><div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-text-palette-1-dark-1 u-text-1">CS194 Final Project:&nbsp;<br>Light Field Camera &amp; Imgae Quilting
+        </h1>
+        <h4 class="u-text u-text-palette-3-base u-text-2">Sainan Chen<br>12/9/2020
+        </h4>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0;">
+            <a class="u-active-palette-1-base u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Introduction.html" style="padding: 10px 36px;">Introduction</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Part1-Image-Quilting.html" style="padding: 10px 36px;">Part1 Image Quilting</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Part2-Light-Field-Camera.html" style="padding: 10px 36px;">Part2 Light Field Camera</a>
+</li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-nav-link u-text-active-white u-text-hover-palette-3-base u-text-palette-1-base" href="Conclusion.html" style="padding: 10px 36px;">Conclusion</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Introduction.html" style="padding: 10px 36px;">Introduction</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Part1-Image-Quilting.html" style="padding: 10px 36px;">Part1 Image Quilting</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Part2-Light-Field-Camera.html" style="padding: 10px 36px;">Part2 Light Field Camera</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Conclusion.html" style="padding: 10px 36px;">Conclusion</a>
+</li></ul>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-0e21">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Overview</h2>
+        <p class="u-text u-text-2">The main idea for this project is implementing the Image Quilting algorithm introduced in paper <b>
+            <font class="u-text-palette-1-base">
+              <a href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/papers/efros-siggraph01.pdf" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1" target="_blank">Image Quilting for Texture Synthesis and Transfer</a>
+            </font></b>&nbsp;by Professor Efros and Freeman. The Image Quilting algorithm is used for Texture Synthesis and Texture Transfer.&nbsp;<br>
+          <br>For Texture Synthesis, like what the paper does, I will compare the results of 3 different stitching strategies:<br>1. Randomly select patches from the sample to stitch;<br>2. Select patches with min Sum of Squared Difference between partically overlapped region;<br>3. On the base of (2), stitch 2 patches together through min-SSD cost path.<br>
+          <br>Although strategy 3 is not complicated, it makes a great improvement on the stitching result, and we will use this strategy for Texture Transfer.<br>
+          <br>For Texture Transfer, I will try to apply different painting styles (Van Gogh, Picasso, Xu Beihong) to one painting (Japanese traditional painting). It's important to choose parameters, including&nbsp;<b>the portions patch-patch stitching SSD and patch-shapeImage matching SSD take respectively in total SSD</b>,&nbsp;<b>tolerance SSD range</b>&nbsp;for randomly choosing a patch, and most important, the<b>&nbsp;patch size</b>&nbsp;and&nbsp;<b>overlap size</b>&nbsp;for calculating patch-patch stitching SSD. I will compare the results of different patch sizes.&nbsp;<br>
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="sec-2318">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Texture Synthesis</h2>
+        <p class="u-text u-text-default u-text-2">To see the different between 3 stitching strategies, I choose some sample textures as examples. The sample textures all have size roughly 200*133 pixels, and the patch size is 50 pixels. The output image contains 5*5 patches and have size 250*250 pixels. The implementation of 3 strategies are as below.<br>
+          <br>1<b>. <font class="u-text-palette-3-base">Randomly select patches from the sample to stitch</font></b>
+          <br>For every patch in output, randomly select a sub image (patch) with size 50*50 from sample.&nbsp;<br>
+          <br>In this way, you will see some obvious color/shape discontinuity.<br>
+          <br>2. <b>
+            <font class="u-text-palette-3-base">Select patches with min Sum of Squared Difference between partically overlapped region</font></b>
+          <br>Randomly select a patch (patch1) from central part of the sample (with offset = overlap length for every edge) for upper left corner in output. To select the patch on right of it, compute the Sum of Square Difference (SSD) between overlapped region of patch1 and every patch (column 40-60 part of left patch and column 0-20 part of right patch) in central part of the sample respectively and find min SSD.&nbsp; Then randomly choose a patch with <b>SSD &lt;= (1+tolerance_coef) * min_SSD</b>. Similarly, choose patches for the whole first row of patches in output, and then choose patches for the whole first column by <b>computing SSD for overlapped region on bottom of top patch and on top of bottom patch</b>. Finally choose patches for rest patches in output from left to right and from top to bottom by computing <b>sum of SSD for top/bottom overlapped region and SSD for left/right overlapped region</b>.&nbsp;<br>
+          <br>This strategy will make sure the nerighboring patches will have similar color, but there will still be clear edges between patches.<br>
+          <br>3. <b>
+            <font class="u-text-palette-3-base">On the base of (2), stitch 2 patches together through min-SSD cost path</font></b>
+          <br>Instead of stitching patches with size 50*50, we stitch the sides based on min-cost cut path in overlapped regions. <b>The min-cost cut path in a overlapped region</b> is a continuous path with minimum SSD on a SSD map of the overlapped region.&nbsp;<br>
+          <br>In this way, we can elminate clear edges between patches in strategy 2.
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="sec-ef5b">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-col">
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-1">
+                    <div class="u-container-layout u-container-layout-1">
+                      <img src="images/patch11.jpg" alt="" class="u-image u-image-default u-image-1" data-image-width="133" data-image-height="111">
+                      <p class="u-text u-text-default u-text-1">Left patch to stitch.&nbsp;<br>Size: 50 *(50 (patch size) + 10 (extended by each side for overlapping)) pixels
+                      </p>
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+                      <img src="images/patch21.jpg" alt="" class="u-image u-image-default u-image-2" data-image-width="133" data-image-height="111">
+                      <p class="u-text u-text-default u-text-2">Right patch to stitch.&nbsp;<br>Area between left edge and rightmost dotted line: overlapped for calculating SSD and choose patch to stitch and error patch for min-cost cut path.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-3">
+                    <div class="u-container-layout u-container-layout-3">
+                      <img src="images/error.jpg" alt="" class="u-image u-image-default u-image-3" data-image-width="317" data-image-height="352">
+                      <p class="u-text u-text-default u-text-3">Left: Error Patch<br>Right: Errpr Patch with min-cost cut path
+                      </p>
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-4">
+                    <div class="u-container-layout u-container-layout-4">
+                      <img src="images/patchResult.jpg" alt="" class="u-image u-image-default u-image-4" data-image-width="133" data-image-height="67">
+                      <p class="u-text u-text-default u-text-4">Final stitched image</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="sec-7474">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-text u-text-default u-text-1">Below are some examples applying strategy 1, 2 and 3.</p>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <img src="images/flower4.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="200" data-image-height="133">
+                  <p class="u-text u-text-default u-text-2">Sample 1: flower1</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-2">
+                <div class="u-container-layout u-valign-bottom u-container-layout-2">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-2" src="images/flower41.jpg" data-image-width="250" data-image-height="250">
+                  <p class="u-text u-text-default u-text-3">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-3">
+                  <img src="images/flower42.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-3" data-image-width="250" data-image-height="250">
+                  <p class="u-text u-text-default u-text-4">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-4">
+                <div class="u-container-layout u-container-layout-4">
+                  <img src="images/flower43.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-4" data-image-width="250" data-image-height="250">
+                  <p class="u-text u-text-default u-text-5">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-2">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-5">
+                <div class="u-container-layout u-valign-bottom u-container-layout-5">
+                  <img src="images/flower5.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-5">
+                  <p class="u-text u-text-6">Sample 2: flower2</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-6">
+                <div class="u-container-layout u-valign-bottom u-container-layout-6">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-6" src="images/flower51.jpg">
+                  <p class="u-text u-text-default u-text-7">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-7">
+                <div class="u-container-layout u-container-layout-7">
+                  <img src="images/flower52.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-7">
+                  <p class="u-text u-text-default u-text-8">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-8">
+                <div class="u-container-layout u-container-layout-8">
+                  <img src="images/flower53.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-8">
+                  <p class="u-text u-text-default u-text-9">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-3">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-9">
+                <div class="u-container-layout u-container-layout-9">
+                  <img src="images/flower3.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-9">
+                  <p class="u-text u-text-default u-text-10">Sample 3: flower3</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-10">
+                <div class="u-container-layout u-valign-bottom u-container-layout-10">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-10" src="images/flower31.jpg">
+                  <p class="u-text u-text-default u-text-11">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-11">
+                <div class="u-container-layout u-container-layout-11">
+                  <img src="images/flower32.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-11">
+                  <p class="u-text u-text-default u-text-12">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-12">
+                <div class="u-container-layout u-container-layout-12">
+                  <img src="images/flower33.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-12">
+                  <p class="u-text u-text-default u-text-13">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-4">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-13">
+                <div class="u-container-layout u-container-layout-13">
+                  <img src="images/stone2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-13">
+                  <p class="u-text u-text-default u-text-14">Sample 4: stone</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-14">
+                <div class="u-container-layout u-valign-bottom u-container-layout-14">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-14" src="images/stone21.jpg">
+                  <p class="u-text u-text-default u-text-15">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-15">
+                <div class="u-container-layout u-container-layout-15">
+                  <img src="images/stone22.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-15">
+                  <p class="u-text u-text-default u-text-16">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-16">
+                <div class="u-container-layout u-container-layout-16">
+                  <img src="images/stone23.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-16">
+                  <p class="u-text u-text-default u-text-17">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-5">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-17">
+                <div class="u-container-layout u-container-layout-17">
+                  <img src="images/leaf2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-17">
+                  <p class="u-text u-text-default u-text-18">Sample 5: leaf</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-18">
+                <div class="u-container-layout u-valign-bottom u-container-layout-18">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-18" src="images/leaf21.jpg">
+                  <p class="u-text u-text-default u-text-19">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-19">
+                <div class="u-container-layout u-container-layout-19">
+                  <img src="images/leaf22.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-19">
+                  <p class="u-text u-text-default u-text-20">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-20">
+                <div class="u-container-layout u-container-layout-20">
+                  <img src="images/leaf23.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-20">
+                  <p class="u-text u-text-default u-text-21">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-6">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-21">
+                <div class="u-container-layout u-container-layout-21">
+                  <img src="images/wood2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-21">
+                  <p class="u-text u-text-default u-text-22">Sample 6: wood</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-22">
+                <div class="u-container-layout u-valign-bottom u-container-layout-22">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-22" src="images/wood21.jpg">
+                  <p class="u-text u-text-default u-text-23">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-23">
+                <div class="u-container-layout u-container-layout-23">
+                  <img src="images/wood22.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-23">
+                  <p class="u-text u-text-default u-text-24">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-24">
+                <div class="u-container-layout u-container-layout-24">
+                  <img src="images/wood23.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-24">
+                  <p class="u-text u-text-default u-text-25">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-12 u-layout-wrap u-layout-wrap-7">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-25">
+                <div class="u-container-layout u-container-layout-25">
+                  <img src="images/bricks_small.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-25">
+                  <p class="u-text u-text-default u-text-26">Sample 7: wall</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-26">
+                <div class="u-container-layout u-valign-bottom u-container-layout-26">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-26" src="images/bricks_small1.jpg">
+                  <p class="u-text u-text-default u-text-27">Randomly sampled texture patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-27">
+                <div class="u-container-layout u-container-layout-27">
+                  <img src="images/bricks_small2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-27">
+                  <p class="u-text u-text-default u-text-28">Overlapping patches</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-28">
+                <div class="u-container-layout u-container-layout-28">
+                  <img src="images/bricks_small3.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-28">
+                  <p class="u-text u-text-default u-text-29">Seamed patches</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-5" id="sec-7c79">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Texture Transfer</h2>
+        <p class="u-text u-text-default u-text-2">For texture transfer, we need another target image which we want to transfer sample texture to. To apply texture transfer, I did some improvement on stretegy 3. Instead of choosing patches just based on SSD between neighboring patches, I added another error which is SSD between the patch and the subimage which has the same corresponding position on target image as the patch on output image, so the patch we choose will mimic the shape of target image. The weight of each error is determined by a parameter alpha: <b>total error for a patch = (1-alpha) *</b><b style="">&nbsp;patch-patch stitching SSD + alpha * patch-targetPatch matching SSD.&nbsp;</b>
+          <br>
+          <br>Therefore, there are 3 parameters in total that I need to choose:<br>1. <b>Alpha</b> for relative importance of&nbsp;patch-patch stitching SSD and&nbsp;patch-targetPatch matching SSD.<br>2. <b>Tolerance_coef</b> to determine the range of total error of patches that we can randomly choose from.<br>3.<b> Patch size</b> in pixel.<br>4. <b>Overlap length</b> in pixel (for 1 patch. total overlap area will have length 2*overlap_length).<br>
+          <br>After some experiment, I fixed alpha = 0.1, tolerance_coef=0.05, and overlap_length = patch_size/5. For patch size, I compared results for several options. Below are some examples of transfering a Japanese traditional painting into different artist styles (and a texture looked like rice).&nbsp;
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-6" id="sec-0f18">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <img src="images/input5.jpg" alt="" class="u-image u-image-default u-image-1" data-image-width="300" data-image-height="202">
+        <p class="u-align-center u-text u-text-default u-text-1">Target image<br>300 * 202 (pixel, col * row)
+        </p>
+        <div class="u-clearfix u-expanded-width u-gutter-14 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-12 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <img src="images/sample3.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-2" data-image-width="100" data-image-height="62">
+                  <p class="u-text u-text-2">Sample 1: van Gogh&nbsp;</p>
+                  <p class="u-text u-text-default u-text-3">100 * 62</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-24 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <img src="images/texture5.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-3" data-image-width="202" data-image-height="202">
+                  <p class="u-text u-text-default u-text-4">Patch size: 10</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-24 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-3">
+                  <img src="images/texture6.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-4" data-image-width="202" data-image-height="202">
+                  <p class="u-text u-text-default u-text-5">Patch size: 5</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-14 u-layout-wrap u-layout-wrap-2">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-12 u-layout-cell-4">
+                <div class="u-container-layout u-container-layout-4">
+                  <img src="images/sample4.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-5">
+                  <p class="u-text u-text-6">Sample 2: Picasso</p>
+                  <p class="u-text u-text-default u-text-7">100 * 67</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-24 u-layout-cell-5">
+                <div class="u-container-layout u-container-layout-5">
+                  <img src="images/texture2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-6">
+                  <p class="u-text u-text-default u-text-8">Patch size: 10</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-24 u-layout-cell-6">
+                <div class="u-container-layout u-container-layout-6">
+                  <img src="images/texture7.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-7">
+                  <p class="u-text u-text-default u-text-9">Patch size: 5</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-14 u-layout-wrap u-layout-wrap-3">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-12 u-layout-cell-7">
+                <div class="u-container-layout u-container-layout-7">
+                  <img src="images/input2.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-8">
+                  <p class="u-text u-text-10">Sample 3: Xu Beihong</p>
+                  <p class="u-text u-text-default u-text-11">100 * 71</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-24 u-layout-cell-8">
+                <div class="u-container-layout u-container-layout-8">
+                  <img src="images/texture9.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-9">
+                  <p class="u-text u-text-default u-text-12">Patch size: 10</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-24 u-layout-cell-9">
+                <div class="u-container-layout u-container-layout-9">
+                  <img src="images/texture8.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-10">
+                  <p class="u-text u-text-default u-text-13">Patch size: 5</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-clearfix u-expanded-width u-gutter-14 u-layout-wrap u-layout-wrap-4">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-12 u-layout-cell-10">
+                <div class="u-container-layout u-container-layout-10">
+                  <img src="images/white_small.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-11">
+                  <p class="u-text u-text-default u-text-14">Sample 4: rice?</p>
+                  <p class="u-text u-text-default u-text-15">85 * 76</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-24 u-layout-cell-11">
+                <div class="u-container-layout u-container-layout-11">
+                  <img src="images/texture11.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-12">
+                  <p class="u-text u-text-default u-text-16">Patch size: 15</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-24 u-layout-cell-12">
+                <div class="u-container-layout u-container-layout-12">
+                  <img src="images/texture10.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-13">
+                  <p class="u-text u-text-default u-text-17">Patch size: 5</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img src="images/input6.jpg" alt="" class="u-image u-image-default u-image-14">
+        <p class="u-align-center u-text u-text-default u-text-18">Target image<br>300 * 399 (pixel)
+        </p>
+        <div class="u-clearfix u-expanded-width u-gutter-14 u-layout-wrap u-layout-wrap-5">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-12 u-layout-cell-13">
+                <div class="u-container-layout u-container-layout-13">
+                  <img src="images/sample5.jpg" alt="" class="u-image u-image-default u-image-15">
+                  <p class="u-text u-text-default u-text-19">Sample</p>
+                  <p class="u-text u-text-default u-text-20">100 * 165</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-16 u-layout-cell-14">
+                <div class="u-container-layout u-container-layout-14">
+                  <img src="images/texture14.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-16">
+                  <p class="u-text u-text-default u-text-21">Patch size: 20</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-16 u-layout-cell-15">
+                <div class="u-container-layout u-container-layout-15">
+                  <img src="images/texture13.jpg" alt="" class="u-expanded-width u-image u-image-default u-image-17" data-image-width="399" data-image-height="399">
+                  <p class="u-text u-text-default u-text-22">Patch size: 15</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-16 u-layout-cell-16">
+                <div class="u-container-layout u-container-layout-16">
+                  <img class="u-expand-resize u-expanded-width u-image u-image-18" src="images/texture12.jpg">
+                  <p class="u-text u-text-default u-text-23">Patch size: 10</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="u-align-left u-text u-text-24">As we can see, there is a tradeoff: smaller the patch size, the more close the output will look like to target image, but it will also lose the characteristics of the artist's style in sample.&nbsp;</p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="sec-0208">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-palette-3-base u-text-1">Bells &amp; Whistles</h2>
+        <p class="u-text u-text-2">We can make result better using <b>image quilting together with blending (e.g. feathering or Laplacian pyramid)</b>. In this example of using toast texture to produce a face, we can blend the output face together with original toast sample using Laplacian pyramid to produce a smooth face-in-toast image.
+        </p>
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-1">
+                <div class="u-container-layout u-valign-top u-container-layout-1">
+                  <img src="images/toast1.jpg" alt="" class="u-image u-image-default u-image-1">
+                  <p class="u-text u-text-default u-text-3">Sample: toast<br>67 * 63
+                  </p>
+                </div>
+              </div>
+              <div class="u-align-center u-container-style u-layout-cell u-size-20 u-layout-cell-2">
+                <div class="u-container-layout u-valign-top u-container-layout-2">
+                  <img src="images/bb.jpg" alt="" class="u-image u-image-default u-image-2" data-image-width="100" data-image-height="100">
+                  <p class="u-text u-text-default u-text-4">Target image<br>100 * 100
+                  </p>
+                </div>
+              </div>
+              <div class="u-align-center u-container-style u-layout-cell u-right-cell u-size-20 u-layout-cell-3">
+                <div class="u-container-layout u-valign-top u-container-layout-3">
+                  <img src="images/texture151.jpg" alt="" class="u-image u-image-default u-image-3">
+                  <p class="u-text u-text-default u-text-5">Texture transfer result<br>patch size: 5
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-6">To put the result back on to the toast, I resized the toast to 200 * 183 and texture transfer result to a size fit into the toast. Below are results of puting the texture transfer reault directly on the toast (left )and using Laplacian pyramid with 2 layers to blend them together (right).</p>
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-2">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-4">
+                <div class="u-container-layout u-valign-top u-container-layout-4">
+                  <img src="images/haha1.jpg" alt="" class="u-image u-image-default u-image-4">
+                  <p class="u-text u-text-default u-text-7">Puting the texture transfer reault directly on the toast.</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-5">
+                <div class="u-container-layout u-valign-top u-container-layout-5">
+                  <img src="images/lp_blended1.jpg" alt="" class="u-image u-image-default u-image-5">
+                  <p class="u-text u-text-default u-text-8">Blended using Laplacian pyramid.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-9">Below are Laplacian pyramid elements. Result is computated by:&nbsp;<br>
+          <br>im1_layer1 = Laplacian_filter(image1, sigma=1)<br>im2_layer1 = Laplacian_filter(image2, sigma=1)<br>filter_layer1 = Gaussian_filter(image3, sigma = 1)<br>im1_layer2 = im1 - im1_layer1<br>im2_layer2 = im2 - im2_layer1<br>filter_layer2 = Gaussian_filter(image3, sigma = 2)<br>result = im1_layer1*filter_layer1 + im2_layer1*(1-filter_layer1)&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+ im1_layer2*filter_layer2 + im2_layer2*(1-filter_layer2)&nbsp;
+        </p>
+        <div class="u-clearfix u-layout-wrap u-layout-wrap-3">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-6">
+                <div class="u-container-layout u-valign-top u-container-layout-6">
+                  <img src="images/image1.jpg" alt="" class="u-image u-image-default u-image-6" data-image-width="200" data-image-height="185">
+                  <p class="u-text u-text-10">Image1: Image to blend in.</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-7">
+                <div class="u-container-layout u-valign-top u-container-layout-7">
+                  <img src="images/image2.jpg" alt="" class="u-image u-image-default u-image-7" data-image-width="200" data-image-height="185">
+                  <p class="u-text u-text-11">Image 2: Background image.</p>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-20 u-layout-cell-8">
+                <div class="u-container-layout u-valign-top u-container-layout-8">
+                  <img src="images/image3.jpg" alt="" class="u-image u-image-default u-image-8" data-image-width="200" data-image-height="185">
+                  <p class="u-text u-text-default u-text-12">Image 3: Filter.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-b697"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Sainan Chen</p>
+      </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
+    </section>
+  </body>
+</html>
